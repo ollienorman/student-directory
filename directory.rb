@@ -15,15 +15,43 @@ students = [
    ]
 =end
 
+=begin
+def print(students)
+    current_index = 0
+    while current_index < students.length
+        puts "#{current_index+1}. #{students[current_index][:name]} (#{students[current_index][:cohort]})"
+        current_index += 1
+    end
+end
+=end
+
 def print_header
-  puts "The Students of Villains Academy"
-  puts "-------------"
+  puts "The Students of Villains Academy".center(50)
+  puts "-------------".center(50)
 end
 
+=begin
 def print(students)
-  students.each { |student|
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index { |student, index|
+      if student[:name].length < 12
+        puts "#{index+1}. #{student[:name]}, (#{student[:cohort]} cohort)"
+      end
   }
+end
+=end
+
+def print(students)
+   cohorts = students.map{ |student| student[:cohort]}.uniq
+   if !students.empty?
+   cohorts.each { |cohort|
+    puts "From #{cohort.to_s} cohort:"
+    students.each { |student|
+        if student[:cohort].to_sym == cohort
+            puts student[:name]
+        end
+     }
+    }
+   end
 end
 
 def print_footer(names)
@@ -31,14 +59,40 @@ def print_footer(names)
 end
 
 def input_students
-   puts "Please enter the names of the students"
+   puts "Please enter the names and cohorts of the students"
    puts "To finish, just hit return twice"
    students = []
-   name = gets.chomp
-   while !name.empty? do
-       students << {name: name, cohort: :november}
-       puts "Now we have #{students.count} students"
+   name = gets.delete "\n"
+   cohort = gets.chomp
+   while !name.empty? || !cohort.empty? do
+     if name.empty?
+       students << {name: "No Name Supplied", cohort: cohort.to_sym}
+       if students.length > 1
+        puts "Now we have #{students.count} students"
+       else
+        puts "Now we have #{students.count} student"
+       end
        name = gets.chomp
+       cohort = gets.chomp
+     elsif cohort.empty?
+       students << {name: name, cohort: :unknown}
+       if students.length > 1
+        puts "Now we have #{students.count} students"
+       else
+        puts "Now we have #{students.count} student"
+       end
+       name = gets.chomp
+       cohort = gets.chomp
+     else
+       students << {name: name, cohort: cohort.to_sym}
+        if students.length > 1
+        puts "Now we have #{students.count} students"
+        else
+        puts "Now we have #{students.count} student"
+        end
+       name = gets.chomp
+       cohort = gets.chomp
+     end
    end
    students
 end
