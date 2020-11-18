@@ -61,40 +61,38 @@ end
 def input_students
    puts "Please enter the names and cohorts of the students"
    puts "To finish, just hit return twice"
-   students = []
    name = gets.delete "\n"
    cohort = gets.chomp
    while !name.empty? || !cohort.empty? do
      if name.empty?
-       students << {name: "No Name Supplied", cohort: cohort.to_sym}
-       if students.length > 1
-        puts "Now we have #{students.count} students"
+       @students << {name: "No Name Supplied", cohort: cohort.to_sym}
+       if @students.length > 1
+        puts "Now we have #{@students.count} students"
        else
-        puts "Now we have #{students.count} student"
+        puts "Now we have #{@students.count} student"
        end
        name = gets.chomp
        cohort = gets.chomp
      elsif cohort.empty?
-       students << {name: name, cohort: :unknown}
-       if students.length > 1
-        puts "Now we have #{students.count} students"
+       @students << {name: name, cohort: :unknown}
+       if @students.length > 1
+        puts "Now we have #{@students.count} students"
        else
-        puts "Now we have #{students.count} student"
+        puts "Now we have #{@students.count} student"
        end
        name = gets.chomp
        cohort = gets.chomp
      else
-       students << {name: name, cohort: cohort.to_sym}
-        if students.length > 1
-        puts "Now we have #{students.count} students"
+       @students << {name: name, cohort: cohort.to_sym}
+        if @students.length > 1
+        puts "Now we have #{@students.count} students"
         else
-        puts "Now we have #{students.count} student"
+        puts "Now we have #{@students.count} student"
         end
        name = gets.chomp
        cohort = gets.chomp
      end
    end
-   students
 end
 
 def print_menu
@@ -105,8 +103,8 @@ end
 
 def show_students
     print_header
-    print(students)
-    print_footer(students)
+    print(@students)
+    print_footer(@students)
 end
 
 def interactive_menu
@@ -116,7 +114,7 @@ def interactive_menu
         selection = gets.chomp
         case selection
             when "1"
-                students = input_students
+                input_students
             when "2"
                 show_students
             when "9"
