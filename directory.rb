@@ -42,12 +42,12 @@ def print_header
   puts "-------------".center(50)
 end
 
-def print(students)
-   cohorts = students.map{ |student| student[:cohort]}.uniq
-   if !students.empty?
+def print_students_list
+   cohorts = @students.map{ |student| student[:cohort]}.uniq
+   if !@students.empty?
    cohorts.each { |cohort|
     puts "From #{cohort.to_s} cohort:"
-    students.each { |student|
+    @students.each { |student|
         if student[:cohort].to_sym == cohort
             puts student[:name]
         end
@@ -56,8 +56,8 @@ def print(students)
    end
 end
 
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 
 def input_students
@@ -105,8 +105,8 @@ end
 
 def show_students
     print_header
-    print(@students)
-    print_footer(@students)
+    print_students_list
+    print_footer
 end
 
 def process(selection)
