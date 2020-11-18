@@ -63,37 +63,13 @@ end
 def input_students
    puts "Please enter the names and cohorts of the students"
    puts "To finish, just hit return twice"
-   name = gets.delete "\n"
+   name = gets.chomp
    cohort = gets.chomp
-   while !name.empty? || !cohort.empty? do
-     if name.empty?
-       @students << {name: "No Name Supplied", cohort: cohort.to_sym}
-       if @students.length > 1
+   while !name.empty? do
+        @students << {name: name, cohort: cohort.to_sym}
         puts "Now we have #{@students.count} students"
-       else
-        puts "Now we have #{@students.count} student"
-       end
-       name = gets.chomp
-       cohort = gets.chomp
-     elsif cohort.empty?
-       @students << {name: name, cohort: :unknown}
-       if @students.length > 1
-        puts "Now we have #{@students.count} students"
-       else
-        puts "Now we have #{@students.count} student"
-       end
-       name = gets.chomp
-       cohort = gets.chomp
-     else
-       @students << {name: name, cohort: cohort.to_sym}
-        if @students.length > 1
-        puts "Now we have #{@students.count} students"
-        else
-        puts "Now we have #{@students.count} student"
-        end
-       name = gets.chomp
-       cohort = gets.chomp
-     end
+        name = gets.chomp
+        cohort = gets.chomp
    end
 end
 
