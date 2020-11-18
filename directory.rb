@@ -35,6 +35,8 @@ def print(students)
 end
 =end
 
+@students = []
+
 def print_header
   puts "The Students of Villains Academy".center(50)
   puts "-------------".center(50)
@@ -107,21 +109,23 @@ def show_students
     print_footer(@students)
 end
 
+def process(selection)
+    case selection
+        when "1"
+            input_students
+        when "2"
+            show_students
+        when "9"
+            exit
+        else
+            puts "I don't know what you meant, try again"
+    end
+end
+
 def interactive_menu
-    @students = []
     loop do
         print_menu
-        selection = gets.chomp
-        case selection
-            when "1"
-                input_students
-            when "2"
-                show_students
-            when "9"
-                exit
-            else
-                puts "I don't know what you meant, try again"
-        end
+        process(gets.chomp)
     end
 end
 
