@@ -35,6 +35,8 @@ def print(students)
 end
 =end
 
+require "csv"
+
 @students = []
 
 def print_header
@@ -114,12 +116,10 @@ end
 def save_students(filename = "students.csv")
     puts "What file would you like to save to?"
     filename = STDIN.gets.chomp
-    File.open(filename, "w") do |file|
+    CSV.open(filename, "wb") do |file|
         @students.each { |student|
         student_data = [student[:name], student[:cohort]]
-        csv_line = student_data.join(",")
-        file.puts csv_line
-        }
+        file << student_data }
     end
     puts "Saved #{@students.count} to #{filename}"
 end
@@ -127,11 +127,9 @@ end
 def load_students(filename = "students.csv")
     puts "What file would you like to load from?"
     filename = STDIN.gets.chomp
-    File.open(filename, "r") do |file|
-    file.readlines.each { |line|
-        name, cohort = line.chomp.split(",")
+    CSV.foreach(filename) do |line|
+        name, cohort = line
         update_hash(name, cohort)
-    }
     end
     puts "Loaded #{@students.count} from #{filename}"
 end
