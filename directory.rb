@@ -25,11 +25,6 @@ def print(students)
 end
 =end
 
-def print_header
-  puts "The Students of Villains Academy".center(50)
-  puts "-------------".center(50)
-end
-
 =begin
 def print(students)
   students.each_with_index { |student, index|
@@ -39,6 +34,11 @@ def print(students)
   }
 end
 =end
+
+def print_header
+  puts "The Students of Villains Academy".center(50)
+  puts "-------------".center(50)
+end
 
 def print(students)
    cohorts = students.map{ |student| student[:cohort]}.uniq
@@ -97,8 +97,35 @@ def input_students
    students
 end
 
-students = input_students
-print_header
-print(students)
-print_footer(students)
+def print_menu
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+end
+
+def show_students
+    print_header
+    print(students)
+    print_footer(students)
+end
+
+def interactive_menu
+    @students = []
+    loop do
+        print_menu
+        selection = gets.chomp
+        case selection
+            when "1"
+                students = input_students
+            when "2"
+                show_students
+            when "9"
+                exit
+            else
+                puts "I don't know what you meant, try again"
+        end
+    end
+end
+
+interactive_menu
 
